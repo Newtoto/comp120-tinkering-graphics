@@ -15,24 +15,16 @@ def imageappear(image):
     screen.blit(image, (0, 0), None, 0)
 
 
-# function to load image from path, omit 'Images/' from path
+# function to load image from path, remember to omit 'Images/' from path
 def imageload(path):
     return pygame.image.load('Images/' + path)
 
 
-# --- Defining movement functions ---
-
-def spinner(swirl):
-    print "confirm"
-    angle = angle + 10
-    swirl = pygame.transform.rotate(swirl, angle)
-    screen.blit(swirl, (0, 0), None, 0)
-
 # --- Loading in image layers and resizing ---
 
 # base layer
-baseImage = imageload('BaseImage.jpg')
-#imageappear(baseImage)
+baseImage = imageload('BaseImage.png')
+imageappear(baseImage)
 
 # dots layers
 dotsImage1 = imageload('Dots/Dots1.png')
@@ -59,17 +51,21 @@ imageappear(yellowLines)
 
 # small spiral layer
 
-tLSpiral = imageload('SmallSpirals/TopLeftSpiral.png')
-imageappear(tLSpiral)
+topLeftSpiral = imageload('SmallSpiral.png')
+topLeftSpiral = pygame.transform.scale(topLeftSpiral, (47, 47))
+screen.blit(topLeftSpiral, (17, 16), None, 0)
 
-tRSpiral = imageload('SmallSpirals/TopRightSpiral.png')
-imageappear(tRSpiral)
+topRightSpiral = imageload('SmallSpiral.png')
+topRightSpiral = pygame.transform.scale(topRightSpiral, (47, 47))
+screen.blit(topRightSpiral, (335, 17), None, 0)
 
-bLSpiral = imageload('SmallSpirals/BottomLeftSpiral.png')
-imageappear(bLSpiral)
+bottomLeftSpiral = imageload('SmallSpiral.png')
+bottomLeftSpiral = pygame.transform.scale(bottomLeftSpiral, (47, 47))
+screen.blit(bottomLeftSpiral, (16, 541), None, 0)
 
-bRSpiral = imageload('SmallSpirals/BottomRightSpiral.png')
-imageappear(bRSpiral)
+bottomRightSpiral = imageload('SmallSpiral.png')
+bottomRightSpiral = pygame.transform.scale(bottomRightSpiral, (47, 47))
+screen.blit(bottomRightSpiral, (336, 541), None, 0)
 
 
 while True:
@@ -77,7 +73,9 @@ while True:
 
     #spinner doesn't work, the function is calling hence 'confirm' on pressing the down arrow
     if pressed[pygame.K_DOWN]:
-        spinner(bLSpiral)
+        angle = angle + 10
+        bLSpiral = pygame.transform.rotate(bLSpiral, angle)
+        screen.blit(bLSpiral, (0, 0), None, 0)
 
     for event in pygame.event.get():
         if event.type == QUIT:
