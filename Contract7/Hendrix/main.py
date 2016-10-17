@@ -3,7 +3,7 @@ from pygame.locals import *
 
 width = 400
 height = 600
-angle = 0
+angle = 90
 
 screen = pygame.display.set_mode((width, height), 0, 32)  # Setting screen size
 
@@ -71,14 +71,15 @@ screen.blit(bottomRightSpiral, (336, 541), None, 0)
 while True:
     pressed = pygame.key.get_pressed()
 
-    #spinner doesn't work, the function is calling hence 'confirm' on pressing the down arrow
+    # spinner works for 90 degree turns but due to the top left point moving, blitting the spiral relative to the screen means that it moves for degrees that aren't in a form of 90 degrees.
     if pressed[pygame.K_DOWN]:
-        angle = 90
+        # rotating the images
         bottomLeftSpiral = pygame.transform.rotate(bottomLeftSpiral, angle)
         bottomRightSpiral = pygame.transform.rotate(bottomLeftSpiral, angle)
         topLeftSpiral = pygame.transform.rotate(bottomLeftSpiral, angle)
         topRightSpiral = pygame.transform.rotate(bottomLeftSpiral, angle)
-        imageappear(baseImage)
+        imageappear(baseImage)  # refreshes the base image to erase the previous spiral pixels
+        # refreshes the new spirals over the base image
         screen.blit(bottomLeftSpiral, (16, 541), None, 0)
         screen.blit(topLeftSpiral, (17, 16), None, 0)
         screen.blit(topRightSpiral, (335, 17), None, 0)
