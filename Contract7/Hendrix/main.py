@@ -73,9 +73,16 @@ while True:
 
     #spinner doesn't work, the function is calling hence 'confirm' on pressing the down arrow
     if pressed[pygame.K_DOWN]:
-        angle = angle + 10
-        bLSpiral = pygame.transform.rotate(bLSpiral, angle)
-        screen.blit(bLSpiral, (0, 0), None, 0)
+        angle = 90
+        bottomLeftSpiral = pygame.transform.rotate(bottomLeftSpiral, angle)
+        bottomRightSpiral = pygame.transform.rotate(bottomLeftSpiral, angle)
+        topLeftSpiral = pygame.transform.rotate(bottomLeftSpiral, angle)
+        topRightSpiral = pygame.transform.rotate(bottomLeftSpiral, angle)
+        imageappear(baseImage)
+        screen.blit(bottomLeftSpiral, (16, 541), None, 0)
+        screen.blit(topLeftSpiral, (17, 16), None, 0)
+        screen.blit(topRightSpiral, (335, 17), None, 0)
+        screen.blit(bottomRightSpiral, (336, 541), None, 0)
 
     for event in pygame.event.get():
         if event.type == QUIT:
