@@ -1,10 +1,12 @@
-import pygame, sys
+import pygame, sys, colorsys
 from pygame.locals import *
 
 width = 400
 height = 600
 angle = 90
 dots = 0
+timer = 0
+time = pygame.time.get_ticks
 
 screen = pygame.display.set_mode((width, height), 0, 32)  # Setting screen size
 
@@ -15,6 +17,9 @@ def imageappear(image):
     image = pygame.transform.scale(image, (width, height))
     screen.blit(image, (0, 0), None, 0)
 
+def imageappearinvert(image):  #still needs element to invert the image
+    image = pygame.transform.scale(image, (width, height))
+    screen.blit(image, (0, 0), None, 0)
 
 # function to load image from path, remember to omit 'Images/' from path
 def imageload(path):
@@ -47,8 +52,12 @@ imageappear(dotsImage5)
 purpleLines = imageload('BigSpiral/PurpleLines.png')
 imageappear(purpleLines)
 
+purpleLinesInvert = imageload('BigSpiral/PurpleLines.png')
+
 yellowLines = imageload('BigSpiral/YellowLines.png')
 imageappear(yellowLines)
+
+yellowLinesInvert = imageload('BigSpiral/YellowLines.png')
 
 # small spiral layer
 
@@ -75,6 +84,7 @@ while True:
     # spinner works for 90 degree turns but due to the top left point moving, blitting the spiral relative to the screen means that it moves for degrees that aren't in a form of 90 degrees.
     if pressed[pygame.K_DOWN]:
         dots += 1
+        timer += 1
         # rotating the images
         bottomLeftSpiral = pygame.transform.rotate(bottomLeftSpiral, angle)
         bottomRightSpiral = pygame.transform.rotate(bottomLeftSpiral, angle)
@@ -86,17 +96,27 @@ while True:
         screen.blit(topLeftSpiral, (17, 16), None, 0)
         screen.blit(topRightSpiral, (335, 17), None, 0)
         screen.blit(bottomRightSpiral, (336, 541), None, 0)
-        if dots == 1:
+        if dots < 6:
             imageappear(dotsImage1)
-        elif dots == 2:
+        elif dots < 12:
             imageappear(dotsImage2)
-        elif dots == 3:
+        elif dots < 18:
             imageappear(dotsImage3)
-        elif dots == 4:
+        elif dots < 24:
             imageappear(dotsImage4)
-        else:
+        elif dots < 30:
             imageappear(dotsImage5)
+        else:
             dots = 0
+
+        if timer < 6:
+            imageappear(yellowLines)
+            imageappear(purpleLines)
+        elif timer < 12:
+            imageappear(yellowLinesInvert)
+            imageappear(purpleLinesInvert)
+        else:
+            timer = 0
 
     for event in pygame.event.get():
         if event.type == QUIT:
