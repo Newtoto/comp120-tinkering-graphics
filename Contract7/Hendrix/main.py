@@ -6,11 +6,15 @@ height = 600
 angle = 90
 dots = 0
 timer = 0
-time = pygame.time.get_ticks
 
 screen = pygame.display.set_mode((width, height), 0, 32)  # Setting screen size
 
 # --- Defining loading functions ---
+
+# function to load image from path, remember to omit 'Images/' from path
+def imageload(path):
+    return pygame.image.load('Images/' + path)
+
 
 # function to resize and display images
 def imageappear(image):
@@ -20,10 +24,6 @@ def imageappear(image):
 def imageappearinvert(image):  #still needs element to invert the image
     image = pygame.transform.scale(image, (width, height))
     screen.blit(image, (0, 0), None, 0)
-
-# function to load image from path, remember to omit 'Images/' from path
-def imageload(path):
-    return pygame.image.load('Images/' + path)
 
 
 # --- Loading in image layers and resizing ---
