@@ -33,6 +33,7 @@ def imageappearinvert(image):  #still needs element to invert the image
 # base layer
 baseImage = imageload('BaseImage.png')
 imageappear(baseImage)
+#baseImage.set_alpha()
 
 # dots layers
 dotsImage1 = imageload('Dots/Dots1.png')
@@ -44,12 +45,13 @@ dotsImage4 = imageload('Dots/Dots4.png')
 dotsImage5 = imageload('Dots/Dots5.png')
 
 # big spiral layers
-purpleLines = imageload('BigSpiral/PurpleLines.png')
+purpleLines = imageload('BigSpiral/PurpleLines2.png')
 imageappear(purpleLines)
+purpleLinesInvert = imageload('BigSpiral/PurpleLinesInvert.png')
 
-yellowLines = imageload('BigSpiral/YellowLines.png')
+yellowLines = imageload('BigSpiral/YellowLines2.png')
 imageappear(yellowLines)
-
+yellowLinesInvert = imageload('BigSpiral/YellowLinesInvert.png')
 # small spiral layer
 
 topLeftSpiral = imageload('SmallSpiral.png')
@@ -101,14 +103,15 @@ while True:
             imageappear(dotsImage1)
             dots = 0
 
-        if timer < 6:
+        if timer < 2:
             imageappear(yellowLines)
             imageappear(purpleLines)
-        elif timer < 12:
-            imageappearinvert(yellowLines)
-            imageappearinvert(purpleLines)
+        elif timer < 4:
+            imageappear(yellowLinesInvert)
+            imageappear(purpleLinesInvert)
         else:
             timer = 0
+            imageappear(yellowLines)
 
     for event in pygame.event.get():
         if event.type == QUIT:
