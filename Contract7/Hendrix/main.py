@@ -1,5 +1,8 @@
 import pygame, sys, colorsys
 from pygame.locals import *
+from PIL import Image
+
+pygame.init()
 
 width = 400
 height = 600
@@ -27,7 +30,6 @@ def imageappearinvert(image):  #still needs element to invert the image
 
 
 # --- Loading in image layers and resizing ---
-
 # base layer
 baseImage = imageload('BaseImage.png')
 imageappear(baseImage)
@@ -37,27 +39,16 @@ dotsImage1 = imageload('Dots/Dots1.png')
 imageappear(dotsImage1)
 
 dotsImage2 = imageload('Dots/Dots2.png')
-imageappear(dotsImage2)
-
 dotsImage3 = imageload('Dots/Dots3.png')
-imageappear(dotsImage3)
-
 dotsImage4 = imageload('Dots/Dots4.png')
-imageappear(dotsImage4)
-
 dotsImage5 = imageload('Dots/Dots5.png')
-imageappear(dotsImage5)
 
 # big spiral layers
 purpleLines = imageload('BigSpiral/PurpleLines.png')
 imageappear(purpleLines)
 
-purpleLinesInvert = imageload('BigSpiral/PurpleLines.png')
-
 yellowLines = imageload('BigSpiral/YellowLines.png')
 imageappear(yellowLines)
-
-yellowLinesInvert = imageload('BigSpiral/YellowLines.png')
 
 # small spiral layer
 
@@ -107,14 +98,15 @@ while True:
         elif dots < 30:
             imageappear(dotsImage5)
         else:
+            imageappear(dotsImage1)
             dots = 0
 
         if timer < 6:
             imageappear(yellowLines)
             imageappear(purpleLines)
         elif timer < 12:
-            imageappear(yellowLinesInvert)
-            imageappear(purpleLinesInvert)
+            imageappearinvert(yellowLines)
+            imageappearinvert(purpleLines)
         else:
             timer = 0
 
