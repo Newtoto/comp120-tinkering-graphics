@@ -1,3 +1,16 @@
+#    pxArray = pygame.PixelArray(purpleLines)
+#    for x in range(0, width):
+#        for y in range(0, height):
+#            colour1 = screen.get_at((x, y)).r
+#            if colour1 == purple:
+#                colour1 = yellow
+#            if colour1 == yellow:
+#                colour1 = purple
+#            pxArray[x:y] = (colour1, 0, 0)
+#    del pxArray
+
+
+
 import pygame, sys, colorsys
 from pygame.locals import *
 from PIL import Image
@@ -6,9 +19,9 @@ pygame.init()
 
 width = 400
 height = 600
-angle = 90
-dots = 0
-timer = 0
+angle = -90  # angle of each turn of corner spirals
+dots = 0  # timer start for dots
+timer = 0  # timer start for spirals
 
 screen = pygame.display.set_mode((width, height), 0, 32)  # Setting screen size
 
@@ -24,8 +37,9 @@ def imageappear(image):
     image = pygame.transform.scale(image, (width, height))
     screen.blit(image, (0, 0), None, 0)
 
-def imageappearinvert(image):  #still needs element to invert the image
+def imageappeardots(image):
     image = pygame.transform.scale(image, (width, height))
+    image.set_alpha(120)
     screen.blit(image, (0, 0), None, 0)
 
 
@@ -33,12 +47,10 @@ def imageappearinvert(image):  #still needs element to invert the image
 # base layer
 baseImage = imageload('BaseImage.png')
 imageappear(baseImage)
-#baseImage.set_alpha()
 
 # dots layers
 dotsImage1 = imageload('Dots/Dots1.png')
-imageappear(dotsImage1)
-
+imageappeardots(dotsImage1)
 dotsImage2 = imageload('Dots/Dots2.png')
 dotsImage3 = imageload('Dots/Dots3.png')
 dotsImage4 = imageload('Dots/Dots4.png')
@@ -48,6 +60,7 @@ dotsImage5 = imageload('Dots/Dots5.png')
 purpleLines = imageload('BigSpiral/PurpleLines2.png')
 imageappear(purpleLines)
 purpleLinesInvert = imageload('BigSpiral/PurpleLinesInvert.png')
+
 
 yellowLines = imageload('BigSpiral/YellowLines2.png')
 imageappear(yellowLines)
@@ -73,9 +86,9 @@ screen.blit(bottomRightSpiral, (336, 541), None, 0)
 
 while True:
     pressed = pygame.key.get_pressed()
-
     # spinner works for 90 degree turns but due to the top left point moving, blitting the spiral relative to the screen means that it moves for degrees that aren't in a form of 90 degrees.
     if pressed[pygame.K_DOWN]:
+
         dots += 1
         timer += 1
         # rotating the images
@@ -89,15 +102,15 @@ while True:
         screen.blit(topLeftSpiral, (17, 16), None, 0)
         screen.blit(topRightSpiral, (335, 17), None, 0)
         screen.blit(bottomRightSpiral, (336, 541), None, 0)
-        if dots < 6:
+        if dots < 5:
             imageappear(dotsImage1)
-        elif dots < 12:
+        elif dots < 10:
             imageappear(dotsImage2)
-        elif dots < 18:
+        elif dots < 15:
             imageappear(dotsImage3)
-        elif dots < 24:
+        elif dots < 20:
             imageappear(dotsImage4)
-        elif dots < 30:
+        elif dots < 25:
             imageappear(dotsImage5)
         else:
             imageappear(dotsImage1)
@@ -117,5 +130,6 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
+
 
     pygame.display.update()
