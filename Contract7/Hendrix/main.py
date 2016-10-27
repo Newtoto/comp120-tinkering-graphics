@@ -40,11 +40,9 @@ while True:
     if timer % 20 == 0:
         screen.blit(bgImage, (0, 0), None, 0)
         timer += 1
-        print "yes"
     elif timer % 10 == 0:
         screen.blit(bgImage2, (0, 0), None, 0)
         timer += 1
-        print "no"
     else:
         timer += 1
 
