@@ -29,13 +29,6 @@ blockY = 426
 blockDist = 0
 blockUp = True
 
-def dotsblit(dotBlock, Xside, Y, blockDist):
-    screen.blit(dotBlock, (Xside, Y - blockDist))
-    screen.blit(dotBlock, (Xside, Y - blockDist + 130))
-    screen.blit(dotBlock, (Xside, Y - blockDist + 260))
-    screen.blit(dotBlock, (Xside, Y - blockDist + 390))
-
-
 # creating screen
 screen = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)
 
