@@ -18,16 +18,18 @@ angle = -90  # degrees turned by corner spirals
 timer = 0  # initialising timer variable for while loop
 clock = pygame.time.Clock()
 
-# creating mask to go over dots
-maskHeight = 93
-dotBlock = pygame.Surface((15, 15))
+# creating mask to go over side dots
+maskHeight = 15
+dotBlock = pygame.Surface((15, maskHeight))
 dotBlock.set_alpha(90)
 dotBlock.fill(BLACK)
-blockXleft = 5
-blockXright = 380
-blockY = 426
+maskXleft = 5
+maskXright = 380
+maskY = 504
 blockDist = 0
-blockUp = True
+maskUp = True
+
+# mask for top dots
 
 # creating screen
 screen = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)
@@ -72,26 +74,26 @@ while True:
 
     # moving mask over dots
     if timer % 10 == 0:
-        if maskHeight < 450:
-            if blockUp == True:
+        if maskHeight > 457:
+            maskUp = False
+            maskHeight -= 26
+        else:
+            if maskUp == True:
                 maskHeight += 26
-                blockDist += 26
+                maskY -= 26
             else:
                 if maskHeight == 15:
-                    blockUp = True
-                    blockDist = -78
+                    maskUp = True
+                    maskY = 504
                 else:
                     maskHeight -= 26
-        else:
-            blockUp = False
-            maskHeight -= 26
 
     dotBlock = pygame.Surface((15, maskHeight))
     dotBlock.set_alpha(180)
 
     # making dot masks appear
-    screen.blit(dotBlock, (blockXleft, blockY - blockDist))
-    screen.blit(dotBlock, (blockXright, blockY - blockDist))
+    screen.blit(dotBlock, (maskXleft, maskY))
+    screen.blit(dotBlock, (maskXright, maskY))
 
     for event in pygame.event.get():
         if event.type == QUIT:
