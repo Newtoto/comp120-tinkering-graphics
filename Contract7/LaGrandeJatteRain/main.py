@@ -24,6 +24,7 @@ num_balls -= 1
 
 for ball_index in xrange(num_balls):
     ball_radius.append(random.randrange(2, 5))
+    ball_pos_x.append(random.randrange(0, WIDTH))
 
 while True:
     window.blit(bg, (0, 0))
