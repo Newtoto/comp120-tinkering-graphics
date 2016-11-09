@@ -4,7 +4,6 @@ from PIL import Image
 
 WIDTH = 562
 HEIGHT = 568
-WHITE = 255, 255, 255
 timer = 0
 screen = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)  # Setting screen size
 clock = pygame.time.Clock()
@@ -16,41 +15,50 @@ def imageload(path):
     return pygame.image.load('Images/' + path)
 
 
-def appear(image):
-    screen.blit(image, (0, 0), None, 0)
+def appear(image, x, y):
+    screen.blit(image, (x, y), None, 0)
 
 
 # --- Loading in image layers and saving flipped version ---
 
 # base layer
 baseImage = imageload('BaseImage.png')
-appear(baseImage)
+baseImage = pygame.transform.scale(baseImage, (WIDTH/2, HEIGHT/2))
 
-trImage = pygame.transform.flip(baseImage, 1, 0)
-blImage = pygame.transform.flip(baseImage, 0, 1)
-brImage = pygame.transform.flip(baseImage, 1, 1)
+blImage = baseImage
+trImage = pygame.transform.flip(blImage, 1, 1)
+brImage = pygame.transform.flip(blImage, 1, 0)
+tlImage = pygame.transform.flip(blImage, 0, 1)
 
-
+images = [tlImage, trImage, brImage, blImage]
 
 while True:
 
-    # cycles through flipped images
-    if timer < 1:
-        appear(trImage)
-    elif timer < 2:
-        appear(brImage)
-    elif timer < 3:
-        appear(blImage)
-    elif timer < 4:
-        appear(baseImage)
-    elif timer < 5:
-        timer = 0
+    holder = images[0]
+
+    # rotates round the images
+    if timer % 1 == 0:
+        for i in xrange(3):
+            images[i] = images[i+1]
+        images[3] = holder
+
+    # makes images appear in corresponding locations
+    appear(images[0], 0, 0)
+    appear(images[1], WIDTH/2, 0)
+    appear(images[2], WIDTH/2, HEIGHT/2)
+    appear(images[3], 0, HEIGHT/2)
 
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
 
-    clock.tick(30)
-    timer += 0.1
+    clock.tick(60)
+
+    if timer < 2:
+        timer += 0.1
+    else:
+        timer = 0
+    print timer
+
     pygame.display.update()
