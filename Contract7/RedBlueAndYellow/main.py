@@ -1,22 +1,19 @@
 import pygame, sys, colorsys
 from pygame.locals import *
+from PIL import Image
 
-width = 592
-height = 600
-
-screen = pygame.display.set_mode((width, height), 0, 32)  # Setting screen size
+WIDTH = 562
+HEIGHT = 568
+WHITE = 255, 255, 255
+timer = 0
+screen = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)  # Setting screen size
+clock = pygame.time.Clock()
 
 # --- Defining loading functions ---
 
 # function to load image from path, remember to omit 'Images/' from path
 def imageload(path):
     return pygame.image.load('Images/' + path)
-
-
-# function to display images
-def resize (image):
-    image = pygame.transform.scale(image, (width, height))
-    return image
 
 
 def appear(image):
@@ -26,16 +23,33 @@ def appear(image):
 # --- Loading in image layers and resizing ---
 
 # base layer
-baseImage = imageload('BaseImage.jpg')
-baseImage = resize(baseImage)
+baseImage = imageload('BaseImage.png')
 appear(baseImage)
+
+trImage = pygame.transform.flip(baseImage, 1, 0)
+blImage = pygame.transform.flip(baseImage, 0, 1)
+brImage = pygame.transform.flip(baseImage, 1, 1)
+
 
 
 while True:
+
+    if timer < 1:
+        appear(trImage)
+    elif timer < 2:
+        appear(brImage)
+    elif timer < 3:
+        appear(blImage)
+    elif timer < 4:
+        appear(baseImage)
+    elif timer < 5:
+        timer = 0
 
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
 
+    clock.tick(30)
+    timer += 0.1
     pygame.display.update()
