@@ -21,7 +21,7 @@ def appear(image):
 # --- Loading in image layers and resizing ---
 
 # base layer
-baseImage = imageload('BaseImage.jpg')
+baseImage = imageload('BaseImage.png')
 appear(baseImage)
 
 
