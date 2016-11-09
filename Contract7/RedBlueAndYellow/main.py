@@ -20,7 +20,7 @@ def appear(image):
     screen.blit(image, (0, 0), None, 0)
 
 
-# --- Loading in image layers and resizing ---
+# --- Loading in image layers and saving flipped version ---
 
 # base layer
 baseImage = imageload('BaseImage.png')
@@ -34,6 +34,7 @@ brImage = pygame.transform.flip(baseImage, 1, 1)
 
 while True:
 
+    # cycles through flipped images
     if timer < 1:
         appear(trImage)
     elif timer < 2:
