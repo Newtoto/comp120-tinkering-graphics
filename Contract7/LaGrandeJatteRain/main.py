@@ -1,46 +1,43 @@
+import pygame
 import random
-import pygame, sys
-from pygame.locals import *
 
 pygame.init()
 clock = pygame.time.Clock()
 
-ball_pos_x = []
-ball_pos_y = []
-ball_speed_x = []
-ball_speed_y = []
-ball_radius = []
-xPos = 0
-yPos = 0
-WIDTH = 750
-HEIGHT = 501
-ball_index = 0
-window = pygame.display.set_mode((WIDTH,HEIGHT),0,32)
-BLACK = (0,0,0)
-BLUE = (0,0,255,6)
+window_width = 750
+window_width = 750
+window_height = 501
+window_size = (window_width, window_height)
+
 bg = pygame.image.load("Images/BaseImage.jpg")
-num_balls = 9
-num_balls -= 1
+window = pygame.display.set_mode(window_size)
 
-for ball_index in xrange(num_balls):
-    ball_radius.append(random.randrange(2, 5))
-    ball_pos_x.append(random.randrange(0, WIDTH))
+rain_pos_x = []
+rain_pos_y = 0
+rain_radius = []
+Blue = (0,0,255)
+x = 0
 
-while True:
-    window.blit(bg, (0, 0))
+num_Rian_drops = 50000
+for rain_index in xrange(num_Rian_drops):
+    rain_pos_x.append(random.randrange(0, window_width))
+    rain_radius.append(random.randrange(2, 5))
+
+running = True
+while running:
     for event in pygame.event.get():
-        if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
+        if event.type == pygame.QUIT:
+            running = False
 
-    for ball_index in xrange(num_balls):
-        xPos += 6
-        yPos += 6
-        radius = ball_radius[ball_index]
+    window.blit(bg, (0, 0))
+    ball_index = 0
+    for rain_index in xrange(num_Rian_drops):
+        rain_pos_y += 1
 
-        window.blit(bg, (0, 0))
-        pygame.draw.circle(window, BLUE, (xPos, yPos), radius)
-        pygame.display.update()
-        clock.tick(120)
+        pos_x = rain_pos_x[rain_index]
+        pos_y = rain_pos_y
+        radius = rain_radius[rain_index]
+        pygame.draw.circle(window, Blue, (pos_x, pos_y), radius)
 
-
+    pygame.display.flip()
+    clock.tick(60)
