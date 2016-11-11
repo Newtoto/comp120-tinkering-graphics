@@ -1,6 +1,6 @@
 import pygame, sys, colorsys
 from pygame.locals import *
-
+from time import sleep
 width = 396
 height = 599
 
@@ -21,15 +21,31 @@ def appear(image):
 # --- Loading in image layers and resizing ---
 
 # base layer
-baseImage = imageload('BaseImage.png')
-appear(baseImage)
-
+baseImage = imageload('Mona_Lisa.jpg')
+skell = imageload('Mona_Lisa_skell.jpg')
 
 while True:
-
+    pressed = pygame.key.get_pressed()
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
+
+    if pressed[K_i]:
+        print "i pressed"
+        for x in range(baseImage.get_width()):
+            for y in range(baseImage.get_height()):
+                RGBA = baseImage.get_at((x, y))
+                for i in range(3):
+                    # Invert RGB, but not Alpha
+                    RGBA[i] = 255 - RGBA[i]
+                baseImage.set_at((x, y), RGBA)
+
+    appear(baseImage)
+
+    if pressed[K_s]:
+        print "s pressed"
+        appear(skell)
+        #sleep(60)
 
     pygame.display.update()
